@@ -2,15 +2,16 @@
 #### Adds more hooks for Serialization of things.
 Currently, Ingredients and Values are supported.
 
+Forked, updated to 1.20.1, and re-published by Falling Colors for use in Hex Casting.
+
 # Use
 ### Setup
 ```groovy
-maven { url = "https://mvn.devos.one/snapshots/" }
+maven { url = "https://maven.hexxy.media" }
 ```
 ```groovy
-modImplementation(include("io.github.tropheusj:serialization-hooks:0.3.<build>"))
+modImplementation(include("io.github.tropheusj:serialization-hooks:0.4.99999"))
 ```
-find the latest build from [GitHub Actions](https://github.com/TropheusJ/serialization-hooks/actions).
 
 ### Actually using it
 #### Ingredients

@@ -12,10 +12,7 @@ targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 group = project.maven_group
-
-ext.buildNumber = System.getenv("GITHUB_RUN_NUMBER")
-String patch = buildNumber != null ? buildNumber : "99999"
-version = project.mod_version.replace("<build>", patch)
+version = project.mod_version
 
 repositories {
 	maven { url = "https://maven.quiltmc.org/repository/release" }
@@ -77,18 +74,6 @@ loom {
 	}
 }
 
-task buildOrPublish {
-	group = "build"
-	String mavenUser = System.getenv().MAVEN_USER
-	if (mavenUser != null && !mavenUser.isEmpty()) {
-		dependsOn(tasks.getByName("publish"))
-		println("prepared for publish")
-	} else {
-		dependsOn(tasks.getByName("build"))
-		println("prepared for build")
-	}
-}
-
 processResources {
 	Map<String, String> properties = new HashMap<>()
 	properties.put("version", project.version)
@@ -126,13 +111,12 @@ publishing {
 	}
 
 	repositories {
-		maven {
-			url = "https://mvn.devos.one/${System.getenv().PUBLISH_SUFFIX}/"
-			credentials {
-				username = System.getenv().MAVEN_USER
-				password = System.getenv().MAVEN_PASS
-			}
-			authentication { basic(BasicAuthentication) }
-		}
-	}
+        maven {
+            url = "https://pkgs.dev.azure.com/hexxy-media/artifacts/_packaging/community/maven/v1"
+            credentials {
+                username = "hexxy-media"
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+    }
 }
